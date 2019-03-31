@@ -1,18 +1,27 @@
 package dev.weblen.aplicativodeculinaria.ui.activities;
 
-import android.net.Uri;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
+import butterknife.ButterKnife;
 import dev.weblen.aplicativodeculinaria.R;
+import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.fragments.RecipesFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipesFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void onFragmentInteraction(Recipe recipe) {
+//        Intent intent = new Intent(this, RecipeInfoActivity.class);
+//        intent.putExtra(RecipeInfoActivity.RECIPE_KEY, recipe);
+//        startActivity(intent);
     }
 }

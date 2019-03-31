@@ -1,7 +1,10 @@
 package dev.weblen.aplicativodeculinaria.ui.fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,68 +20,106 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.adapters.RecipesAdapter;
+import dev.weblen.aplicativodeculinaria.api.APICallback;
+import dev.weblen.aplicativodeculinaria.api.APIRecipes;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RecipesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RecipesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipesFragment extends Fragment {
     private static final String RECIPES_KEY = "all_recipes";
     @BindView(R.id.recipes_recycler_view)
-    RecyclerView mRecipesRecyclerView;
+    RecyclerView       mRecipesRecyclerView;
     @BindView(R.id.refresh_recycler_view)
-    SwipeRefreshLayout mRefreshRecyclerView;
+    SwipeRefreshLayout mPullToRefresh;
+    private Unbinder unbinder;
+//    @BindView(R.id.refresh_recycler_view)
+//    SwipeRefreshLayout mRefreshRecyclerView;
 
-    private List<Recipe> mRecipes;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private List<Recipe>                  mRecipes;
     private OnFragmentInteractionListener mListener;
+
+    private final BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (mRecipes == null) {
+                fetchRecipes();
+            }
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getActivity().registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        getActivity().unregisterReceiver(networkChangeReceiver);
+    }
+
+    private void fetchRecipes() {
+//        // Set SwipeRefreshLayout that refreshing in case that loadRecipes get called by the networkChangeReceiver
+//        if (Misc.isNetworkAvailable(getActivity().getApplicationContext())) {
+//            mPullToRefresh.setRefreshing(true);
+
+            APIRecipes.getInstance().getRecipes(new APICallback<List<Recipe>>() {
+                @Override
+                public void onResponse(final List<Recipe> result) {
+                    if (result != null) {
+                        mRecipes = result;
+                        mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                mListener.onFragmentInteraction(mRecipes.get(position));
+                            }
+                        }));
+//                        // Set the default recipe for the widget
+//                        if (Prefs.loadRecipe(getActivity().getApplicationContext()) == null) {
+//                            AppWidgetService.updateWidget(getActivity(), mRecipes.get(0));
+//                        }
+
+                    }
+//                    else {
+//                        Misc.makeSnackBar(getActivity(), getView(), getString(R.string.failed_to_load_data), true);
+//                    }
+                    formatLayout();
+                }
+
+                @Override
+                public void onCancel() {
+                    formatLayout();
+                }
+
+            });
+//        } else {
+//            Misc.makeSnackBar(getActivity(), getView(), getString(R.string.no_internet), true);
+//        }
+    }
+
+    private void formatLayout() {
+        boolean loaded = mRecipes != null && mRecipes.size() > 0;
+        mPullToRefresh.setRefreshing(false);
+
+        mRecipesRecyclerView.setVisibility(loaded ? View.VISIBLE : View.GONE);
+//        mNoDataContainer.setVisibility(loaded ? View.GONE : View.VISIBLE);
+
+//        globalApplication.setIdleState(true);
+    }
 
     public RecipesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecipesFragment newInstance(String param1, String param2) {
-        RecipesFragment fragment = new RecipesFragment();
-        Bundle          args     = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -88,6 +129,7 @@ public class RecipesFragment extends Fragment {
 
         // Inflate the layout for this fragment bind view to butter knife
         View viewRoot = inflater.inflate(R.layout.fragment_recipes, container, false);
+        unbinder = ButterKnife.bind(this, viewRoot);
 
         setLayoutMode();
 
@@ -107,8 +149,9 @@ public class RecipesFragment extends Fragment {
     }
 
     private void setLayoutMode() {
-        mRecipesRecyclerView.setVisibility(View.GONE);
+
         mRecipesRecyclerView.setHasFixedSize(true);
+        mRecipesRecyclerView.setVisibility(View.GONE);
 
         boolean twoPaneMode = false;
         if (twoPaneMode) {
@@ -117,15 +160,8 @@ public class RecipesFragment extends Fragment {
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         }
 
-        mRecipesRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 8));
+//        mRecipesRecyclerView.addItemDecoration(new SpacingItemDecoration((int) getResources().getDimension(R.dimen.margin_medium)));
         mRecipesRecyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener());
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Recipe recipe) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(recipe);
-        }
     }
 
     @Override

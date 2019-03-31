@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.weblen.aplicativodeculinaria.R;
 
-public class RecipeViewHolder extends RecyclerView.ViewHolder {
+public class RecipesViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.recipe_name)
     public TextView mTvRecipeName;
 
@@ -19,9 +19,8 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.recipe_image)
     public AppCompatImageView mIvRecipe;
 
-    public RecipeViewHolder(View itemView) {
+    public RecipesViewHolder(View itemView) {
         super(itemView);
-
         ButterKnife.bind(this, itemView);
     }
 }

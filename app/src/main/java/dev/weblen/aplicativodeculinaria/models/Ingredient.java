@@ -1,10 +1,8 @@
 package dev.weblen.aplicativodeculinaria.models;
 
-import java.util.HashMap;
-import java.util.Map;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,24 +10,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "quantity",
         "measure",
         "ingredient"
 })
-public class Ingredient implements Parcelable
-{
+public class Ingredient implements Parcelable {
 
-    @JsonProperty("quantity")
-    private Integer quantity;
-    @JsonProperty("measure")
-    private String measure;
-    @JsonProperty("ingredient")
-    private String ingredient;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    public final static Parcelable.Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
+    public final static Parcelable.Creator<Ingredient> CREATOR              = new Creator<Ingredient>() {
 
 
         @SuppressWarnings({
@@ -43,26 +35,33 @@ public class Ingredient implements Parcelable
             return (new Ingredient[size]);
         }
 
-    }
-            ;
+    };
+    @JsonProperty("quantity")
+    private             float                          quantity;
+    @JsonProperty("measure")
+    private             String                         measure;
+    @JsonProperty("ingredient")
+    private             String                         ingredient;
+    @JsonIgnore
+    private             Map<String, Object>            additionalProperties = new HashMap<String, Object>();
 
     protected Ingredient(Parcel in) {
-        this.quantity = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.quantity = ((float) in.readValue((float.class.getClassLoader())));
         this.measure = ((String) in.readValue((String.class.getClassLoader())));
         this.ingredient = ((String) in.readValue((String.class.getClassLoader())));
-        this.additionalProperties = ((Map<String, Object> ) in.readValue((Map.class.getClassLoader())));
+        this.additionalProperties = ((Map<String, Object>) in.readValue((Map.class.getClassLoader())));
     }
 
     public Ingredient() {
     }
 
     @JsonProperty("quantity")
-    public Integer getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
     @JsonProperty("quantity")
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 

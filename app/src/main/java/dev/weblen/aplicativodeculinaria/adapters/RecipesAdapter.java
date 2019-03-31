@@ -7,18 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
-import java.util.Locale;
 
 import dev.weblen.aplicativodeculinaria.R;
-import dev.weblen.aplicativodeculinaria.holders.IngredientsViewHolder;
-import dev.weblen.aplicativodeculinaria.holders.RecipeViewHolder;
-import dev.weblen.aplicativodeculinaria.holders.StepViewHolder;
-import dev.weblen.aplicativodeculinaria.models.Ingredient;
+import dev.weblen.aplicativodeculinaria.holders.RecipesViewHolder;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder>  {
     private Context                       mContext;
     private List<Recipe>                  mRecipes;
     private Listeners.OnItemClickListener mOnItemClickListener;
@@ -32,47 +30,53 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (i == 0) {
-            return new IngredientsViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.recipe_ingredients, viewGroup, false));
-        } else {
-            return new StepViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.recipe_step, viewGroup, false));
-        }
+    public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.recipe_list_item, viewGroup, false);
+
+        return new RecipesViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        if (viewHolder instanceof IngredientsViewHolder) {
-            IngredientsViewHolder mViewHolder = (IngredientsViewHolder) viewHolder;
+    public void onBindViewHolder(@NonNull RecipesViewHolder viewHolder, final int position) {
+        viewHolder.mTvRecipeName.setText(mRecipes.get(position).getName());
+        viewHolder.mTvServings.setText(mContext.getString(R.string.servings, mRecipes.get(position).getServings()));
 
-            StringBuilder ingValue = new StringBuilder();
-            for (int i = 0; i < mRecipe.getIngredients().size(); i++) {
-                Ingredient ingredients = mRecipe.getIngredients().get(i);
-                ingValue.append(String.format(Locale.getDefault(), "• %s (%d %s)", ingredients.getIngredient(), ingredients.getQuantity(), ingredients.getMeasure()));
-                if (i != mRecipe.getIngredients().size() - 1)
-                    ingValue.append("\n");
+//        String recipeImage = mRecipes.get(position).getImage();
+//        if (!recipeImage.isEmpty()) {
+//
+//            GlideApp.with(mContext)
+//                    .load(recipeImage)
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .placeholder(R.drawable.ic_dinner)
+//                    .into(viewHolder.mIvRecipe);
+//        }
+        setImage(viewHolder, position);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null)
+                    mOnItemClickListener.onItemClick(position);
             }
+        });
+    }
 
-            ((IngredientsViewHolder) viewHolder).mTvIngredients.setText(ingValue.toString());
-        } else if (viewHolder instanceof StepViewHolder) {
-            StepViewHolder mViewHolder = (StepViewHolder) viewHolder;
-            ((StepViewHolder) viewHolder).mTvStepName.setText(String.valueOf(position - 1) + ".");
-            ((StepViewHolder) viewHolder).mTvStepName.setText(mRecipe.getSteps().get(position - 1).getShortDescription());
+    void setImage(RecipesViewHolder viewHolder, final int position) {
 
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnItemClickListener != null)
-                        mOnItemClickListener.onItemClick(position - 1);
-                }
-            });
+        String recipeImage = mRecipes.get(position).getImage();
+
+        if (!recipeImage.isEmpty()) {
+            Picasso.with(mContext)
+                    .load(recipeImage)
+                    .placeholder(R.drawable.ic_cake_red_24dp)
+                    .into(viewHolder.mIvRecipe);
+            //.error(R.drawable.ic_image_error)
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRecipes.size();
     }
 }
