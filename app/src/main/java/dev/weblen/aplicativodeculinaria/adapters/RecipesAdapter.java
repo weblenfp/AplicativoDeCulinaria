@@ -42,15 +42,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder>  {
         viewHolder.mTvRecipeName.setText(mRecipes.get(position).getName());
         viewHolder.mTvServings.setText(mContext.getString(R.string.servings, mRecipes.get(position).getServings()));
 
-//        String recipeImage = mRecipes.get(position).getImage();
-//        if (!recipeImage.isEmpty()) {
-//
-//            GlideApp.with(mContext)
-//                    .load(recipeImage)
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .placeholder(R.drawable.ic_dinner)
-//                    .into(viewHolder.mIvRecipe);
-//        }
         setImage(viewHolder, position);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

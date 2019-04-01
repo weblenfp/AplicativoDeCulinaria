@@ -8,14 +8,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.weblen.aplicativodeculinaria.R;
 
-public class StepViewHolder extends RecyclerView.ViewHolder {
+public class RecipeStepsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.step_order_text)
     public TextView mTvStepOrder;
 
     @BindView(R.id.step_name_text)
     public TextView mTvStepName;
 
-    public StepViewHolder(View itemView) {
+    public RecipeStepsViewHolder(View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);

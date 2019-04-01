@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
 
     @Override
     public void onFragmentInteraction(Recipe recipe) {
-//        Intent intent = new Intent(this, RecipeInfoActivity.class);
-//        intent.putExtra(RecipeInfoActivity.RECIPE_KEY, recipe);
-//        startActivity(intent);
+        Intent intent = new Intent(this, RecipeGeneralDescriptionActivity.class);
+        intent.putExtra(RecipeGeneralDescriptionActivity.RECIPE_KEY, recipe);
+        startActivity(intent);
     }
 }

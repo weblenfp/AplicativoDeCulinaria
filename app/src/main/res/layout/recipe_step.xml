@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true">
 
@@ -43,6 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/step_order_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/step_order_text"
+        android:src="@drawable/ic_arrow_right_red_24dp"
         tools:ignore="ContentDescription" />
 
     <FrameLayout
@@ -54,4 +56,4 @@
         app:layout_constraintLeft_toLeftOf="@id/step_name_text"
         app:layout_constraintRight_toRightOf="parent" />
 
-</ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

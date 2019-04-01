@@ -8,11 +8,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.weblen.aplicativodeculinaria.R;
 
-public class IngredientsViewHolder extends RecyclerView.ViewHolder {
+public class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.ingredients_text)
     public TextView mTvIngredients;
 
-    public IngredientsViewHolder(View itemView) {
+    public RecipeIngredientsViewHolder(View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
