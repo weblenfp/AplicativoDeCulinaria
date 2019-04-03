@@ -3,25 +3,15 @@ package dev.weblen.aplicativodeculinaria.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "quantity",
-        "measure",
-        "ingredient"
-})
 public class Ingredient implements Parcelable {
 
-    public final static Parcelable.Creator<Ingredient> CREATOR              = new Creator<Ingredient>() {
+    public final static Parcelable.Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
 
 
         @SuppressWarnings({
@@ -36,14 +26,14 @@ public class Ingredient implements Parcelable {
         }
 
     };
-    @JsonProperty("quantity")
+    @SerializedName("quantity")
     private             float                          quantity;
-    @JsonProperty("measure")
+    @SerializedName("measure")
     private             String                         measure;
-    @JsonProperty("ingredient")
+    @SerializedName("ingredient")
     private             String                         ingredient;
-    @JsonIgnore
-    private             Map<String, Object>            additionalProperties = new HashMap<String, Object>();
+
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     protected Ingredient(Parcel in) {
         this.quantity = ((float) in.readValue((float.class.getClassLoader())));
@@ -53,44 +43,39 @@ public class Ingredient implements Parcelable {
     }
 
     public Ingredient() {
+        this.quantity = 0;
+        this.measure = "";
+        this.ingredient = "";
     }
 
-    @JsonProperty("quantity")
     public float getQuantity() {
         return quantity;
     }
 
-    @JsonProperty("quantity")
     public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 
-    @JsonProperty("measure")
     public String getMeasure() {
         return measure;
     }
 
-    @JsonProperty("measure")
     public void setMeasure(String measure) {
         this.measure = measure;
     }
 
-    @JsonProperty("ingredient")
     public String getIngredient() {
         return ingredient;
     }
 
-    @JsonProperty("ingredient")
     public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
     }
 
-    @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
-    @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
@@ -106,4 +91,12 @@ public class Ingredient implements Parcelable {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "Ingredients{" +
+                "quantity=" + quantity +
+                ", measure='" + measure + '\'' +
+                ", ingredient='" + ingredient + '\'' +
+                '}';
+    }
 }

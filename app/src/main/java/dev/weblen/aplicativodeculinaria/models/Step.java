@@ -1,41 +1,16 @@
 package dev.weblen.aplicativodeculinaria.models;
 
-import java.util.HashMap;
-import java.util.Map;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "id",
-        "shortDescription",
-        "description",
-        "videoURL",
-        "thumbnailURL"
-})
-public class Step implements Parcelable
-{
+import com.google.gson.annotations.SerializedName;
 
-    @JsonProperty("id")
-    private Integer id;
-    @JsonProperty("shortDescription")
-    private String shortDescription;
-    @JsonProperty("description")
-    private String description;
-    @JsonProperty("videoURL")
-    private String videoURL;
-    @JsonProperty("thumbnailURL")
-    private String thumbnailURL;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    public final static Parcelable.Creator<Step> CREATOR = new Creator<Step>() {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Step implements Parcelable {
+
+    public final static Parcelable.Creator<Step> CREATOR              = new Creator<Step>() {
 
 
         @SuppressWarnings({
@@ -49,8 +24,18 @@ public class Step implements Parcelable
             return (new Step[size]);
         }
 
-    }
-            ;
+    };
+    @SerializedName("id")
+    private Integer id;
+    @SerializedName("shortDescription")
+    private String  shortDescription;
+    @SerializedName("description")
+    private String  description;
+    @SerializedName("videoURL")
+    private String  videoURL;
+    @SerializedName("thumbnailURL")
+    private String  thumbnailURL;
+    private             Map<String, Object>      additionalProperties = new HashMap<String, Object>();
 
     protected Step(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -58,68 +43,61 @@ public class Step implements Parcelable
         this.description = ((String) in.readValue((String.class.getClassLoader())));
         this.videoURL = ((String) in.readValue((String.class.getClassLoader())));
         this.thumbnailURL = ((String) in.readValue((String.class.getClassLoader())));
-        this.additionalProperties = ((Map<String, Object> ) in.readValue((Map.class.getClassLoader())));
+        this.additionalProperties = ((Map<String, Object>) in.readValue((Map.class.getClassLoader())));
     }
 
     public Step() {
+        this.videoURL = "";
+        this.description = "";
+        this.id = 0;
+        this.shortDescription = "";
+        this.thumbnailURL = "";
     }
 
-    @JsonProperty("id")
     public Integer getId() {
         return id;
     }
 
-    @JsonProperty("id")
     public void setId(Integer id) {
         this.id = id;
     }
 
-    @JsonProperty("shortDescription")
     public String getShortDescription() {
         return shortDescription;
     }
 
-    @JsonProperty("shortDescription")
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
-    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
-    @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
     }
 
-    @JsonProperty("videoURL")
     public String getVideoURL() {
         return videoURL;
     }
 
-    @JsonProperty("videoURL")
     public void setVideoURL(String videoURL) {
         this.videoURL = videoURL;
     }
 
-    @JsonProperty("thumbnailURL")
     public String getThumbnailURL() {
         return thumbnailURL;
     }
 
-    @JsonProperty("thumbnailURL")
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
 
-    @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
-    @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
@@ -137,4 +115,14 @@ public class Step implements Parcelable
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "Step{" +
+                "videoURL='" + videoURL + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", thumbnailURL='" + thumbnailURL + '\'' +
+                '}';
+    }
 }

@@ -37,14 +37,15 @@ public class RecipeGeneralDescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_general_description);
         ButterKnife.bind(this);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            if (bundle.containsKey(RECIPE_KEY)) {
-                mRecipe = bundle.getParcelable(RECIPE_KEY);
-            } else {
-                Toast.makeText(getApplicationContext(), "Failed to load recipe...", Toast.LENGTH_LONG);
-                finish();
-            }
+        //Bundle bundle = getIntent().getExtras();
+
+        Intent intent = getIntent();
+
+        if (intent != null && intent.hasExtra(Intent.EXTRA_REFERRER)) {
+            mRecipe = intent.getParcelableExtra(Intent.EXTRA_REFERRER);
+        } else {
+            Toast.makeText(getApplicationContext(), "Failed to load recipe...", Toast.LENGTH_LONG);
+            finish();
         }
 
         mTabletMode = getResources().getBoolean(R.bool.tabletMode);
