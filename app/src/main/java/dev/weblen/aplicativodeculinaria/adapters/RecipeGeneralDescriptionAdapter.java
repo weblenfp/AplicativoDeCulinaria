@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import dev.weblen.aplicativodeculinaria.R;
@@ -19,6 +20,11 @@ public class RecipeGeneralDescriptionAdapter extends RecyclerView.Adapter<Recycl
 
     private Recipe                        mRecipe;
     private Listeners.OnItemClickListener mOnItemClickListener;
+
+    public RecipeGeneralDescriptionAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
+        this.mRecipe = recipe;
+        this.mOnItemClickListener = onItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -40,7 +46,9 @@ public class RecipeGeneralDescriptionAdapter extends RecyclerView.Adapter<Recycl
             StringBuilder ingValue = new StringBuilder();
             for (int i = 0; i < mRecipe.getIngredients().size(); i++) {
                 Ingredient ingredients = mRecipe.getIngredients().get(i);
-                ingValue.append(String.format(Locale.getDefault(), "• %s (%d %s)", ingredients.getIngredient(), ingredients.getQuantity(), ingredients.getMeasure()));
+                DecimalFormat format = new DecimalFormat("0.#");
+                String quantity = format.format(ingredients.getQuantity());
+                ingValue.append(String.format(Locale.getDefault(), "- %s (%s %s)", ingredients.getIngredient(), quantity, ingredients.getMeasure()));
                 if (i != mRecipe.getIngredients().size() - 1)
                     ingValue.append("\n");
             }
