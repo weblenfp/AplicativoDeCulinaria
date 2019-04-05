@@ -113,7 +113,6 @@ public class RecipesFragment extends Fragment {
     }
 
     public RecipesFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -124,9 +123,7 @@ public class RecipesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        // Inflate the layout for this fragment bind view to butter knife
         View viewRoot = inflater.inflate(R.layout.fragment_list_recipes, container, false);
         unbinder = ButterKnife.bind(this, viewRoot);
 

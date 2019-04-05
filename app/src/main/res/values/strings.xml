@@ -6,4 +6,5 @@
     <string name="ingredients_text">Ingredients</string>
     <string name="servings">Servings: %d</string>
     <string name="ingredients">Ingredients</string>
+    <string name="pageTitle">Step %d</string>
 </resources>

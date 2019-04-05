@@ -12,20 +12,18 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.weblen.aplicativodeculinaria.R;
-import dev.weblen.aplicativodeculinaria.adapters.RecipeGeneralDescriptionAdapter;
+import dev.weblen.aplicativodeculinaria.adapters.RecipesAdapter;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 import dev.weblen.aplicativodeculinaria.ui.fragments.StepsFragment;
 
 public class RecipeGeneralDescriptionActivity extends AppCompatActivity {
 
-    public static final String RECIPE_KEY = "recipe_general_description";
-
     @BindView(R.id.recipe_list_step)
     RecyclerView mRecyclerView;
 
-//    @BindView(android.R.id.content)
-//    View mParentLayout;
+    @BindView(android.R.id.content)
+    View mParentLayout;
 
     private boolean mTabletMode;
 
@@ -56,45 +54,34 @@ public class RecipeGeneralDescriptionActivity extends AppCompatActivity {
 
         mTabletMode = getResources().getBoolean(R.bool.tabletMode);
 
-//            // If there is no fragment state and the recipe contains steps, show the 1st one
-//            if (savedInstanceState == null && !mRecipe.getSteps().isEmpty()) {
-//
-//                if (mTabletMode) {
-//                    Bundle arguments = new Bundle();
-//                    arguments.putParcelable(RecipeStepDetailFragment.STEP_KEY, mRecipe.getSteps().get(position));
-//                    RecipeStepDetailFragment fragment = new RecipeStepDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.recipe_step_detail_container, fragment)
-//                            .commit();
-//                } else {
-//                    Intent intent = new Intent(this, RecipeStepDetailActivity.class);
-//                    intent.putExtra(RecipeStepDetailActivity.RECIPE_KEY, mRecipe);
-//                    intent.putExtra(RecipeStepDetailActivity.STEP_SELECTED_KEY, position);
-//                    startActivity(intent);
-//                }
-//            }
+            // If there is no fragment state and the recipe contains steps, show the 1st one
+            if (savedInstanceState == null && !mRecipe.getSteps().isEmpty()) {
+                adjustDevice(0);
+            }
 
-
-        mRecyclerView.setAdapter(new RecipeGeneralDescriptionAdapter(mRecipe, new Listeners.OnItemClickListener() {
+        mRecyclerView.setAdapter(new RecipesAdapter(mRecipe, new Listeners.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                                if (mTabletMode) {
-                    Bundle arguments = new Bundle();
-                    arguments.putParcelable(StepsFragment.STEP_KEY, mRecipe.getSteps().get(position));
-                    StepsFragment fragment = new StepsFragment();
-                    fragment.setArguments(arguments);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.recipe_list_step, fragment)
-                            .commit();
-                } else {
-                    Intent intent = new Intent(this, RecipeG.class);
-                    intent.putExtra(RecipeStepDetailActivity.RECIPE_KEY, mRecipe);
-                    intent.putExtra(RecipeStepDetailActivity.STEP_SELECTED_KEY, position);
-                    startActivity(intent);
-                }
+                adjustDevice(position);
             }
         }));
+    }
+
+    private void adjustDevice(int position) {
+        if (mTabletMode) {
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(MediaPlayerInstructionsActivity.STEP_KEY, mRecipe.getSteps().get(position));
+            StepsFragment fragment = new StepsFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.recipe_step_detail_container, fragment)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, MediaPlayerInstructionsActivity.class);
+            intent.putExtra(MediaPlayerInstructionsActivity.RECIPE_KEY, mRecipe);
+            intent.putExtra(MediaPlayerInstructionsActivity.STEP_KEY, position);
+            startActivity(intent);
+        }
     }
 
     @Override

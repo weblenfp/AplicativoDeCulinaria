@@ -42,7 +42,6 @@ public class StepsFragment extends Fragment {
     @BindView(R.id.instructions_container)
     NestedScrollView mInstructionsContainer;
 
-
     @BindView(R.id.exo_player_view)
     SimpleExoPlayerView mExoPlayerView;
     @BindView(R.id.step_thumbnail_image)
