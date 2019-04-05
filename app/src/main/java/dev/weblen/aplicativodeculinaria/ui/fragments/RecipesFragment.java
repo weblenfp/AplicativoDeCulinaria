@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -128,7 +127,7 @@ public class RecipesFragment extends Fragment {
         // Inflate the layout for this fragment
 
         // Inflate the layout for this fragment bind view to butter knife
-        View viewRoot = inflater.inflate(R.layout.fragment_recipes, container, false);
+        View viewRoot = inflater.inflate(R.layout.fragment_list_recipes, container, false);
         unbinder = ButterKnife.bind(this, viewRoot);
 
         setLayoutMode();

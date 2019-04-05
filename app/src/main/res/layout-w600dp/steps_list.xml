@@ -20,7 +20,7 @@
             android:layout_weight="1"
             app:layoutManager="LinearLayoutManager"
             tools:context=".ui.activities.RecipeGeneralDescriptionActivity"
-            tools:listitem="@layout/recipe_step" />
+            tools:listitem="@layout/step_list_item" />
 
         <FrameLayout
             android:id="@+id/recipe_step_detail_container"

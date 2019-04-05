@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="dev.weblen.aplicativodeculinaria">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,15 +12,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.RecipeGeneralDescriptionActivity"></activity>
-        <activity android:name=".ui.activities.MainActivity">
+        android:theme="@style/AppTheme"/>
+        <activity android:name=".ui.activities.MediaPlayerInstructionsActivity"
+            tools:ignore="WrongManifestParent" />
+        <activity android:name=".ui.activities.MainActivity"
+            tools:ignore="WrongManifestParent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity
+            android:name=".ui.activities.RecipeGeneralDescriptionActivity"
+            android:label="@string/title_recipe_step_detail"
+            android:parentActivityName=".ui.activities.RecipeGeneralDescriptionActivity"
+            tools:ignore="WrongManifestParent" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dev.weblen.aplicativodeculinaria.ui.activities.RecipeGeneralDescriptionActivity" />
 
 </manifest>

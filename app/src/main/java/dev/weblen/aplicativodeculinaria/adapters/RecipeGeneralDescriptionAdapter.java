@@ -34,7 +34,7 @@ public class RecipeGeneralDescriptionAdapter extends RecyclerView.Adapter<Recycl
                     .inflate(R.layout.recipe_ingredients, viewGroup, false));
         } else { // Steps
             return new RecipeStepsViewHolder(LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.recipe_step, viewGroup, false));
+                    .inflate(R.layout.step_list_item, viewGroup, false));
         }
     }
 

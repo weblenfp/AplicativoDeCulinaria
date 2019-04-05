@@ -88,10 +88,10 @@ public class RecipeGeneralDescriptionActivity extends AppCompatActivity {
                             .replace(R.id.recipe_list_step, fragment)
                             .commit();
                 } else {
-//                    Intent intent = new Intent(this, RecipeG.class);
-//                    intent.putExtra(RecipeStepDetailActivity.RECIPE_KEY, mRecipe);
-//                    intent.putExtra(RecipeStepDetailActivity.STEP_SELECTED_KEY, position);
-//                    startActivity(intent);
+                    Intent intent = new Intent(this, RecipeG.class);
+                    intent.putExtra(RecipeStepDetailActivity.RECIPE_KEY, mRecipe);
+                    intent.putExtra(RecipeStepDetailActivity.STEP_SELECTED_KEY, position);
+                    startActivity(intent);
                 }
             }
         }));
