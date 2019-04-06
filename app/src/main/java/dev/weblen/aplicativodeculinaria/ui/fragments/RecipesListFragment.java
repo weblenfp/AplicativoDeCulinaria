@@ -21,13 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.weblen.aplicativodeculinaria.R;
-import dev.weblen.aplicativodeculinaria.adapters.RecipesAdapter;
+import dev.weblen.aplicativodeculinaria.adapters.RecipesListAdapter;
 import dev.weblen.aplicativodeculinaria.api.APICallback;
 import dev.weblen.aplicativodeculinaria.api.APIRecipes;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
-public class RecipesFragment extends Fragment {
+public class RecipesListFragment extends Fragment {
     private static final String RECIPES_KEY = "all_recipes";
     @BindView(R.id.recipes_recycler_view)
     RecyclerView       mRecipesRecyclerView;
@@ -73,7 +73,7 @@ public class RecipesFragment extends Fragment {
                 public void onResponse(final List<Recipe> result) {
                     if (result != null) {
                         mRecipes = result;
-                        mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
+                        mRecipesRecyclerView.setAdapter(new RecipesListAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
                                 mListener.onFragmentInteraction(mRecipes.get(position));
@@ -112,7 +112,7 @@ public class RecipesFragment extends Fragment {
 //        globalApplication.setIdleState(true);
     }
 
-    public RecipesFragment() {
+    public RecipesListFragment() {
     }
 
     @Override
@@ -132,7 +132,7 @@ public class RecipesFragment extends Fragment {
         if (savedInstanceState != null && savedInstanceState.containsKey(RECIPES_KEY)) {
             mRecipes = savedInstanceState.getParcelableArrayList(RECIPES_KEY);
 
-            mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
+            mRecipesRecyclerView.setAdapter(new RecipesListAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     mListener.onFragmentInteraction(mRecipes.get(position));

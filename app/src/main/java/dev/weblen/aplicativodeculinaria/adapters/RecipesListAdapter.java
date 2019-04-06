@@ -12,22 +12,22 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dev.weblen.aplicativodeculinaria.R;
-import dev.weblen.aplicativodeculinaria.holders.RecipesViewHolder;
+import dev.weblen.aplicativodeculinaria.holders.RecipesListViewHolder;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
+public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHolder> {
     private Context mContext;
     private List<Recipe> mRecipes;
     private Listeners.OnItemClickListener mOnItemClickListener;
     private Recipe mRecipe;
 
-    public RecipesAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
+    public RecipesListAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
         this.mRecipe = recipe;
         this.mOnItemClickListener = onItemClickListener;
     }
 
-    public RecipesAdapter(Context applicationContext, List<Recipe> mRecipes, Listeners.OnItemClickListener onItemClickListener) {
+    public RecipesListAdapter(Context applicationContext, List<Recipe> mRecipes, Listeners.OnItemClickListener onItemClickListener) {
         this.mContext = applicationContext;
         this.mRecipes = mRecipes;
         this.mOnItemClickListener = onItemClickListener;
@@ -35,15 +35,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
 
     @NonNull
     @Override
-    public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecipesListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recipe_list_item, viewGroup, false);
 
-        return new RecipesViewHolder(view);
+        return new RecipesListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipesViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull RecipesListViewHolder viewHolder, final int position) {
         viewHolder.mTvRecipeName.setText(mRecipes.get(position).getName());
         viewHolder.mTvServings.setText(mContext.getString(R.string.servings, mRecipes.get(position).getServings()));
 
@@ -58,7 +58,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
         });
     }
 
-    void setImage(RecipesViewHolder viewHolder, final int position) {
+    void setImage(RecipesListViewHolder viewHolder, final int position) {
 
         String recipeImage = mRecipes.get(position).getImage();
 

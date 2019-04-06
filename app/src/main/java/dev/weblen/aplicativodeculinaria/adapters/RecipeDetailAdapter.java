@@ -16,12 +16,12 @@ import dev.weblen.aplicativodeculinaria.models.Ingredient;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
-public class RecipeGeneralDescriptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Recipe                        mRecipe;
     private Listeners.OnItemClickListener mOnItemClickListener;
 
-    public RecipeGeneralDescriptionAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
+    public RecipeDetailAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
         this.mRecipe = recipe;
         this.mOnItemClickListener = onItemClickListener;
     }

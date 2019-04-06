@@ -11,7 +11,7 @@ import java.util.List;
 
 import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.models.Step;
-import dev.weblen.aplicativodeculinaria.ui.activities.MediaPlayerInstructionsActivity;
+import dev.weblen.aplicativodeculinaria.ui.activities.RecipeDetailActivity;
 import dev.weblen.aplicativodeculinaria.ui.fragments.StepsFragment;
 
 public class PageControlAdapter extends FragmentPagerAdapter {
@@ -27,7 +27,7 @@ public class PageControlAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle arguments = new Bundle();
-        arguments.putParcelable(MediaPlayerInstructionsActivity.STEP_KEY, mSteps.get(position));
+        arguments.putParcelable(RecipeDetailActivity.STEP_KEY, mSteps.get(position));
         StepsFragment fragment = new StepsFragment();
         fragment.setArguments(arguments);
 

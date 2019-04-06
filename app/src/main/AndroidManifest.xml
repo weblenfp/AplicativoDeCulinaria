@@ -21,15 +21,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.RecipeGeneralDescriptionActivity"
+            android:name=".ui.activities.RecipeStepsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activities.MediaPlayerInstructionsActivity"
-            android:parentActivityName=".ui.activities.MediaPlayerInstructionsActivity"
+            android:name=".ui.activities.RecipeDetailActivity"
+            android:parentActivityName=".ui.activities.RecipeDetailActivity"
             tools:ignore="WrongManifestParent" />
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="dev.weblen.aplicativodeculinaria.ui.activities.MediaPlayerInstructionsActivity" />
+            android:value="dev.weblen.aplicativodeculinaria.ui.activities.RecipeDetailActivity" />
 
     </application>
 

@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -14,25 +15,23 @@ import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.adapters.PageControlAdapter;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 
-public class MediaPlayerInstructionsActivity extends AppCompatActivity {
+public class RecipeStepsActivity extends AppCompatActivity {
 
-    public static final String RECIPE_KEY = "recipe_general_description";
-    public static final String STEP_KEY = "step_selected_recipe";
-
+    public static final String RECIPE_KEY = "step_selected_recipe";
+    public static final String STEP_KEY   = "recipe_general_description";
     @BindView(R.id.recipe_step_tab_layout)
     TabLayout mTlRecipeStep;
     @BindView(R.id.recipe_step_viewpager)
     ViewPager mVpRecipeStep;
     @BindView(android.R.id.content)
-    View mParentLayout;
-
+    View      mParentLayout;
     private Recipe mRecipe;
-    private int mStepSelectedPosition;
+    private int    mStepSelectedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_media_player_instructions);
+        setContentView(R.layout.activity_recipe_detail);
 
         ButterKnife.bind(this);
 
@@ -43,11 +42,10 @@ public class MediaPlayerInstructionsActivity extends AppCompatActivity {
         if (bundle != null && bundle.containsKey(RECIPE_KEY) && bundle.containsKey(STEP_KEY)) {
             mRecipe = bundle.getParcelable(RECIPE_KEY);
             mStepSelectedPosition = bundle.getInt(STEP_KEY);
+        } else {
+//            Misc.makeSnackBar(this, mParentLayout, getString(R.string.failed_to_load_recipe), true);
+            finish();
         }
-//            else {
-//                Misc.makeSnackBar(this, mParentLayout, getString(R.string.failed_to_load_recipe), true);
-//                finish();
-//            }
 
         // Show the Up button in the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -59,7 +57,6 @@ public class MediaPlayerInstructionsActivity extends AppCompatActivity {
         PageControlAdapter adapter = new PageControlAdapter(getApplicationContext(), mRecipe.getSteps(), getSupportFragmentManager());
         mVpRecipeStep.setAdapter(adapter);
         mTlRecipeStep.setupWithViewPager(mVpRecipeStep);
-
         mVpRecipeStep.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -90,6 +87,6 @@ public class MediaPlayerInstructionsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("MediaPlayerActivity", "onDestroy");
+        Log.d("RecipeDetailActivity", "onDestroy");
     }
 }
