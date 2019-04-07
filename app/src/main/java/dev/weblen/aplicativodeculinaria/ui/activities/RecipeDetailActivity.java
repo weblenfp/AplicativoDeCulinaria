@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.adapters.RecipeDetailAdapter;
-import dev.weblen.aplicativodeculinaria.adapters.RecipesListAdapter;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 import dev.weblen.aplicativodeculinaria.ui.fragments.StepsFragment;
@@ -32,7 +30,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @BindView(android.R.id.content)
     View mParentLayout;
 
-    private boolean mDeviceType;
+    private boolean mTabletDevice;
 
     private Recipe mRecipe;
 
@@ -48,7 +46,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             finish();
         }
 
-        setContentView(R.layout.activity_recipe_steps);
+        setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
 
 //        Toolbar toolbar = findViewById(R.id.detail_toolbar);
@@ -61,8 +59,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mDeviceType = getResources().getBoolean(R.bool.tabletMode);
-        if (mDeviceType) {
+        mTabletDevice = getResources().getBoolean(R.bool.tabletMode);
+        if (mTabletDevice) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
@@ -100,7 +98,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void showStep(int position) {
-        if (mDeviceType) {
+        if (mTabletDevice) {
             Bundle arguments = new Bundle();
             arguments.putParcelable(StepsFragment.STEP_KEY, mRecipe.getSteps().get(position));
             StepsFragment fragment = new StepsFragment();
@@ -132,6 +130,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
 //
 //            return true;
 //        } else
-            return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 }

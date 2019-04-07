@@ -27,7 +27,7 @@ public class PageControlAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle arguments = new Bundle();
-        arguments.putParcelable(RecipeDetailActivity.STEP_KEY, mSteps.get(position));
+        arguments.putParcelable(StepsFragment.STEP_KEY, mSteps.get(position));
         StepsFragment fragment = new StepsFragment();
         fragment.setArguments(arguments);
 

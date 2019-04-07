@@ -50,7 +50,7 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/cardview_dark_background"
+        android:background="@color/colorPrimaryDark"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/step_name_text"

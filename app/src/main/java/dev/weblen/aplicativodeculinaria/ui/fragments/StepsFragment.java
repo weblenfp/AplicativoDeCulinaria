@@ -36,7 +36,6 @@ import dev.weblen.aplicativodeculinaria.models.Step;
 
 public class StepsFragment extends Fragment {
     public static final  String STEP_KEY            = "step_fragment_key";
-    public static final  String RECIPE_KEY          = "recipe_general_description";
     private static final String POSITION_KEY        = "pos_fragment_key";
     private static final String PLAY_WHEN_READY_KEY = "play_when_ready_key";
 
@@ -73,7 +72,7 @@ public class StepsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.step_list_item, container, false);
+        View rootView = inflater.inflate(R.layout.recipe_step_detail, container, false);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(POSITION_KEY)) {
             mCurrentPosition = savedInstanceState.getLong(POSITION_KEY);
@@ -85,7 +84,7 @@ public class StepsFragment extends Fragment {
         mTvInstructions.setText(mStep.getDescription());
 
         if (!mStep.getThumbnailURL().isEmpty()) {
-            Picasso.with(mContext)
+            Picasso.with(getContext())
                     .load(mStep.getThumbnailURL())
                     .placeholder(R.drawable.ic_cake_red_24dp)
                     .into(mIvThumbnail);

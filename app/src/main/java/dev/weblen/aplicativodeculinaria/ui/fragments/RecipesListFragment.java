@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,13 @@ public class RecipesListFragment extends Fragment {
         super.onPause();
 
         getActivity().unregisterReceiver(networkChangeReceiver);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+        Log.d("RecipesListFragment","onDestroyView");
     }
 
     private void fetchRecipes() {
