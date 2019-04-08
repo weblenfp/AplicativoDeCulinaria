@@ -59,7 +59,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mTabletDevice = getResources().getBoolean(R.bool.tabletMode);
+        mTabletDevice = getResources().getBoolean(R.bool.tabletDevice);
         if (mTabletDevice) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).

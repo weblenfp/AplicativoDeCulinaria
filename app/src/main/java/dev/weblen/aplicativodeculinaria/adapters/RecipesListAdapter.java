@@ -20,12 +20,6 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHold
     private Context mContext;
     private List<Recipe> mRecipes;
     private Listeners.OnItemClickListener mOnItemClickListener;
-    private Recipe mRecipe;
-
-    public RecipesListAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
-        this.mRecipe = recipe;
-        this.mOnItemClickListener = onItemClickListener;
-    }
 
     public RecipesListAdapter(Context applicationContext, List<Recipe> mRecipes, Listeners.OnItemClickListener onItemClickListener) {
         this.mContext = applicationContext;

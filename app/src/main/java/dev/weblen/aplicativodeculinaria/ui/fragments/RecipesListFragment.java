@@ -157,8 +157,8 @@ public class RecipesListFragment extends Fragment {
         mRecipesRecyclerView.setHasFixedSize(true);
         mRecipesRecyclerView.setVisibility(View.GONE);
 
-        boolean twoPaneMode = false;
-        if (twoPaneMode) {
+        boolean mTabletDevice = getResources().getBoolean(R.bool.tabletDevice);
+        if (mTabletDevice) {
             mRecipesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 3));
         } else {
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
