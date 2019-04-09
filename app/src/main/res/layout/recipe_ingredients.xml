@@ -29,6 +29,7 @@
             android:layout_marginBottom="@dimen/margin_large"
             android:textColor="@android:color/white"
             tools:text="@string/ingredients_text" />
+
     </android.support.v7.widget.CardView>
 
     <TextView
@@ -46,5 +47,15 @@
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/show_in_widget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_in_widget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/Base.Theme.AppCompat.Light"/>
+
 
 </android.support.constraint.ConstraintLayout>

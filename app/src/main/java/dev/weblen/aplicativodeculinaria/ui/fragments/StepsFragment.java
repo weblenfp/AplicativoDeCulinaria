@@ -1,6 +1,6 @@
 package dev.weblen.aplicativodeculinaria.ui.fragments;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -21,6 +22,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
@@ -53,9 +55,13 @@ public class StepsFragment extends Fragment {
     private Step            mStep;
     private Unbinder        unbinder;
 
-    private long    mCurrentPosition = 0;
-    private boolean mPlayWhenReady   = true;
-    private Context mContext;
+    private long    mCurrentPosition     = 0;
+    private boolean mPlayWhenReady       = true;
+    private boolean mExoPlayerFullscreen = false;
+    private Dialog  mFullScreenDialog;
+
+    private boolean mTabletDevice = false;
+    private boolean mIsLandscape  = false;
 
     public StepsFragment() {
     }
@@ -97,12 +103,32 @@ public class StepsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(mStep.getVideoURL()))
+
+        mTabletDevice = false;
+        mIsLandscape = getResources().getBoolean(R.bool.is_landscape);
+
+        if (!TextUtils.isEmpty(mStep.getVideoURL())) {
+
             initializePlayer(Uri.parse(mStep.getVideoURL()));
-        else {
+
+            if (!mTabletDevice && mIsLandscape) {
+                openFullscreenDialog();
+            } else if (mExoPlayerFullscreen) {
+                closeFullscreenDialog();
+            }
+        } else {
             // Un- hide InstructionsContainer because in case of phone landscape is hidden
             mInstructionsContainer.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void openFullscreenDialog() {
+        mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+        mExoPlayer.setVideoScalingMode(C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
+    }
+
+    private void closeFullscreenDialog() {
+
     }
 
     @Override

@@ -18,6 +18,9 @@ import dev.weblen.aplicativodeculinaria.adapters.RecipeDetailAdapter;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 import dev.weblen.aplicativodeculinaria.ui.fragments.StepsFragment;
+import dev.weblen.aplicativodeculinaria.utils.WidgetContentManager;
+import dev.weblen.aplicativodeculinaria.utils.WidgetProvider;
+import dev.weblen.aplicativodeculinaria.utils.WidgetRVService;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
@@ -124,12 +127,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.action_add_to_widget) {
-//            AppWidgetService.updateWidget(this, mRecipe);
+        if (item.getItemId() == R.id.show_in_widget) {
+            WidgetRVService.updateWidget(this, mRecipe);
 //            Misc.makeSnackBar(this, mParentLayout, String.format(getString(R.string.added_to_widget), mRecipe.getName()), false);
-//
-//            return true;
-//        } else
+
+            return true;
+        } else
         return super.onOptionsItemSelected(item);
     }
 }
