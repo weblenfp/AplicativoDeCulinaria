@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/step_order_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/step_order_text"
-        android:src="@drawable/ic_arrow_right_red_24dp"
+        android:src="@drawable/ic_arrow"
         tools:ignore="ContentDescription" />
 
     <FrameLayout

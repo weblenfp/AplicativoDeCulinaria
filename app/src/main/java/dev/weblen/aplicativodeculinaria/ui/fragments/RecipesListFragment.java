@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,16 +27,14 @@ import dev.weblen.aplicativodeculinaria.api.APICallback;
 import dev.weblen.aplicativodeculinaria.api.APIRecipes;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
+import dev.weblen.aplicativodeculinaria.ui.activities.RecipeDetailActivity;
+import dev.weblen.aplicativodeculinaria.utils.NetworkHelper;
 
 public class RecipesListFragment extends Fragment {
     private static final String RECIPES_KEY = "all_recipes";
     @BindView(R.id.recipes_recycler_view)
-    RecyclerView       mRecipesRecyclerView;
-    @BindView(R.id.refresh_recycler_view)
-    SwipeRefreshLayout mPullToRefresh;
+    RecyclerView mRecipesRecyclerView;
     private Unbinder unbinder;
-//    @BindView(R.id.refresh_recycler_view)
-//    SwipeRefreshLayout mRefreshRecyclerView;
 
     private List<Recipe>                  mRecipes;
     private OnFragmentInteractionListener mListener;
@@ -49,6 +47,9 @@ public class RecipesListFragment extends Fragment {
             }
         }
     };
+
+    public RecipesListFragment() {
+    }
 
     @Override
     public void onResume() {
@@ -68,13 +69,12 @@ public class RecipesListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        Log.d("RecipesListFragment","onDestroyView");
+        Log.d("RecipesListFragment", "onDestroyView");
     }
 
     private void fetchRecipes() {
-//        // Set SwipeRefreshLayout that refreshing in case that loadRecipes get called by the networkChangeReceiver
-//        if (Misc.isNetworkAvailable(getActivity().getApplicationContext())) {
-//            mPullToRefresh.setRefreshing(true);
+
+        if (NetworkHelper.isInternetAvailable(getActivity())) {
 
             APIRecipes.getInstance().getRecipes(new APICallback<List<Recipe>>() {
                 @Override
@@ -87,15 +87,10 @@ public class RecipesListFragment extends Fragment {
                                 mListener.onFragmentInteraction(mRecipes.get(position));
                             }
                         }));
-//                        // Set the default recipe for the widget
-//                        if (Prefs.loadRecipe(getActivity().getApplicationContext()) == null) {
-//                            AppWidgetService.updateWidget(getActivity(), mRecipes.get(0));
-//                        }
 
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Failed to receive recipes", Toast.LENGTH_LONG).show();
                     }
-//                    else {
-//                        Misc.makeSnackBar(getActivity(), getView(), getString(R.string.failed_to_load_data), true);
-//                    }
                     formatLayout();
                 }
 
@@ -103,24 +98,16 @@ public class RecipesListFragment extends Fragment {
                 public void onCancel() {
                     formatLayout();
                 }
-
             });
-//        } else {
-//            Misc.makeSnackBar(getActivity(), getView(), getString(R.string.no_internet), true);
-//        }
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "No internet", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void formatLayout() {
         boolean loaded = mRecipes != null && mRecipes.size() > 0;
-        mPullToRefresh.setRefreshing(false);
 
         mRecipesRecyclerView.setVisibility(loaded ? View.VISIBLE : View.GONE);
-//        mNoDataContainer.setVisibility(loaded ? View.GONE : View.VISIBLE);
-
-//        globalApplication.setIdleState(true);
-    }
-
-    public RecipesListFragment() {
     }
 
     @Override
@@ -146,7 +133,6 @@ public class RecipesListFragment extends Fragment {
                     mListener.onFragmentInteraction(mRecipes.get(position));
                 }
             }));
-//            dataLoadedTakeCareLayout();
         }
         return viewRoot;
 
@@ -164,7 +150,6 @@ public class RecipesListFragment extends Fragment {
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         }
 
-//        mRecipesRecyclerView.addItemDecoration(new SpacingItemDecoration((int) getResources().getDimension(R.dimen.margin_medium)));
         mRecipesRecyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener());
     }
 

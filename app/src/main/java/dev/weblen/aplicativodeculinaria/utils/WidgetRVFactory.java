@@ -23,7 +23,7 @@ public class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-        recipe = WidgetContentManager.loadRecipe(mContext);
+        recipe = ContentManagerHelper.loadRecipe(mContext);
     }
 
     @Override
@@ -33,14 +33,17 @@ public class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        return recipe.getIngredients().size();
+        if (recipe != null)
+            return recipe.getIngredients().size();
+        else
+            return 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews row = new RemoteViews(mContext.getPackageName(), R.layout.widget_selected_recipe_list_item);
 
-        row.setTextViewText(R.id.ingredients_text, recipe.getIngredients().get(position).getIngredient());
+        row.setTextViewText(R.id.widget_ingredients_item_text, recipe.getIngredients().get(position).getIngredient());
 
         return row;
     }

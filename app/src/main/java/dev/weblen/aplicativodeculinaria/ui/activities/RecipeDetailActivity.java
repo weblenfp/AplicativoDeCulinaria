@@ -6,9 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import butterknife.BindView;
@@ -18,20 +15,15 @@ import dev.weblen.aplicativodeculinaria.adapters.RecipeDetailAdapter;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 import dev.weblen.aplicativodeculinaria.ui.fragments.StepsFragment;
-import dev.weblen.aplicativodeculinaria.utils.WidgetContentManager;
-import dev.weblen.aplicativodeculinaria.utils.WidgetProvider;
-import dev.weblen.aplicativodeculinaria.utils.WidgetRVService;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
     public static final String RECIPE_KEY = "recipe_general_description";
-    public static final String STEP_KEY   = "recipe_general_description";
 
     @BindView(R.id.recipe_step_list)
     RecyclerView mRecyclerView;
-
     @BindView(android.R.id.content)
-    View mParentLayout;
+    View         mParentLayout;
 
     private boolean mTabletDevice;
 
@@ -45,15 +37,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (bundle != null && bundle.containsKey(RECIPE_KEY)) {
             mRecipe = bundle.getParcelable(RECIPE_KEY);
         } else {
-//            Misc.makeSnackBar(this, mParentLayout, getString(R.string.failed_to_load_recipe), true);
             finish();
         }
 
         setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
-
-//        Toolbar toolbar = findViewById(R.id.detail_toolbar);
-//        setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar and set recipes name as title.
         ActionBar actionBar = getSupportActionBar();
@@ -91,7 +79,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-//        mRecyclerView.addItemDecoration(new SpacingItemDecoration((int) getResources().getDimension(R.dimen.margin_medium)));
         mRecyclerView.setAdapter(new RecipeDetailAdapter(mRecipe, new Listeners.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -115,24 +102,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
             intent.putExtra(RecipeStepsActivity.STEP_KEY, position);
             startActivity(intent);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.recipe_info, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.show_in_widget) {
-            WidgetRVService.updateWidget(this, mRecipe);
-//            Misc.makeSnackBar(this, mParentLayout, String.format(getString(R.string.added_to_widget), mRecipe.getName()), false);
-
-            return true;
-        } else
-        return super.onOptionsItemSelected(item);
     }
 }

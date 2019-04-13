@@ -34,15 +34,11 @@ public class RecipeStepsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-//        Toolbar toolbar = findViewById(R.id.detail_toolbar);
-//        setSupportActionBar(toolbar);
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey(RECIPE_KEY) && bundle.containsKey(STEP_KEY)) {
             mRecipe = bundle.getParcelable(RECIPE_KEY);
             mStepSelectedPosition = bundle.getInt(STEP_KEY);
         } else {
-//            Misc.makeSnackBar(this, mParentLayout, getString(R.string.failed_to_load_recipe), true);
             finish();
         }
 

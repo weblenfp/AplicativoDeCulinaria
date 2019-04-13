@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="dev.weblen.aplicativodeculinaria">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,11 +24,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.activities.RecipeDetailActivity"
-            android:parentActivityName=".ui.activities.RecipeDetailActivity"
-            tools:ignore="WrongManifestParent" />
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.RecipeDetailActivity" />
+            android:parentActivityName=".ui.activities.RecipeDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.RecipeDetailActivity" />
+        </activity>
+
         <receiver android:name=".utils.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

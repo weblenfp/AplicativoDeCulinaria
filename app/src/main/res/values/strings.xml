@@ -7,6 +7,6 @@
     <string name="servings">Servings: %d</string>
     <string name="ingredients">Ingredients</string>
     <string name="pageTitle">Step %d</string>
-    <string name="no_data">No data...</string>
-    <string name="show_in_widget">show on widget</string>
+    <string name="no_data">No recipe selected...</string>
+    <string name="show_in_widget">show in widget</string>
 </resources>

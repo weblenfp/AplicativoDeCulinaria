@@ -11,7 +11,7 @@ import dev.weblen.aplicativodeculinaria.models.Recipe;
 public class WidgetRVService extends RemoteViewsService {
 
     public static void updateWidget(Context context, Recipe recipe) {
-        WidgetContentManager.saveRecipe(context, recipe);
+        ContentManagerHelper.saveRecipe(context, recipe);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[]            appWidgetIds     = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));

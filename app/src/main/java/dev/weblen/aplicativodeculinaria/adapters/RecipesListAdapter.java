@@ -17,8 +17,8 @@ import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
 public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHolder> {
-    private Context mContext;
-    private List<Recipe> mRecipes;
+    private Context                       mContext;
+    private List<Recipe>                  mRecipes;
     private Listeners.OnItemClickListener mOnItemClickListener;
 
     public RecipesListAdapter(Context applicationContext, List<Recipe> mRecipes, Listeners.OnItemClickListener onItemClickListener) {
@@ -59,7 +59,7 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHold
         if (!recipeImage.isEmpty()) {
             Picasso.with(mContext)
                     .load(recipeImage)
-                    .placeholder(R.drawable.ic_cake_red_24dp)
+                    .placeholder(R.drawable.ic_cake)
                     .into(viewHolder.mIvRecipe);
             //.error(R.drawable.ic_image_error)
         }

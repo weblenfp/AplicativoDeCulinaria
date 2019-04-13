@@ -1,10 +1,12 @@
 package dev.weblen.aplicativodeculinaria.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -15,6 +17,8 @@ import dev.weblen.aplicativodeculinaria.holders.RecipeStepsViewHolder;
 import dev.weblen.aplicativodeculinaria.models.Ingredient;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
+import dev.weblen.aplicativodeculinaria.utils.ContentManagerHelper;
+import dev.weblen.aplicativodeculinaria.utils.WidgetRVService;
 
 public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -39,21 +43,36 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int position) {
         if (viewHolder instanceof RecipeIngredientsViewHolder) {
             RecipeIngredientsViewHolder holderIngredients = (RecipeIngredientsViewHolder) viewHolder;
 
             StringBuilder ingValue = new StringBuilder();
             for (int i = 0; i < mRecipe.getIngredients().size(); i++) {
-                Ingredient ingredients = mRecipe.getIngredients().get(i);
-                DecimalFormat format = new DecimalFormat("0.#");
-                String quantity = format.format(ingredients.getQuantity());
+                Ingredient    ingredients = mRecipe.getIngredients().get(i);
+                DecimalFormat format      = new DecimalFormat("0.#");
+                String        quantity    = format.format(ingredients.getQuantity());
                 ingValue.append(String.format(Locale.getDefault(), "- %s (%s %s)", ingredients.getIngredient(), quantity, ingredients.getMeasure()));
                 if (i != mRecipe.getIngredients().size() - 1)
                     ingValue.append("\n");
             }
-
             holderIngredients.mTvIngredients.setText(ingValue.toString());
+
+            final Context context = viewHolder.itemView.getContext();
+
+            //Set if recipe was selected to show in widget
+            holderIngredients.mSwitchShowinWidget.setChecked(ContentManagerHelper.checkSavedRecipe(context, mRecipe.getId()));
+
+            holderIngredients.mSwitchShowinWidget.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean buttonOn) {
+                    if (buttonOn) {
+                        WidgetRVService.updateWidget(context, mRecipe);
+                    } else {
+                        WidgetRVService.updateWidget(context, null);
+                    }
+                }
+            });
         } else if (viewHolder instanceof RecipeStepsViewHolder) {
             RecipeStepsViewHolder holderSteps = (RecipeStepsViewHolder) viewHolder;
             holderSteps.mTvStepOrder.setText(String.valueOf(position - 1) + ".");

@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Recipe implements Parcelable {
@@ -28,17 +27,17 @@ public class Recipe implements Parcelable {
 
     };
     @SerializedName("id")
-    private Integer          id;
+    private             Integer                    id;
     @SerializedName("name")
-    private String           name;
+    private             String                     name;
     @SerializedName("ingredients")
-    private ArrayList<Ingredient> ingredients = null;
+    private             ArrayList<Ingredient>      ingredients          = null;
     @SerializedName("steps")
-    private ArrayList<Step>       steps       = null;
+    private             ArrayList<Step>            steps                = null;
     @SerializedName("servings")
-    private Integer          servings;
+    private             Integer                    servings;
     @SerializedName("image")
-    private String           image;
+    private             String                     image;
     private             Map<String, Object>        additionalProperties = new HashMap<String, Object>();
 
     protected Recipe(Parcel in) {

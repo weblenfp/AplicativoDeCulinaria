@@ -1,6 +1,5 @@
 package dev.weblen.aplicativodeculinaria.ui.fragments;
 
-import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -35,6 +34,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.models.Step;
+import dev.weblen.aplicativodeculinaria.utils.NetworkHelper;
+
+import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_VISIBLE;
 
 public class StepsFragment extends Fragment {
     public static final  String STEP_KEY            = "step_fragment_key";
@@ -43,7 +46,6 @@ public class StepsFragment extends Fragment {
 
     @BindView(R.id.instructions_container)
     NestedScrollView mInstructionsContainer;
-
     @BindView(R.id.exo_player_view)
     SimpleExoPlayerView mExoPlayerView;
     @BindView(R.id.step_thumbnail_image)
@@ -58,7 +60,6 @@ public class StepsFragment extends Fragment {
     private long    mCurrentPosition     = 0;
     private boolean mPlayWhenReady       = true;
     private boolean mExoPlayerFullscreen = false;
-    private Dialog  mFullScreenDialog;
 
     private boolean mTabletDevice = false;
     private boolean mIsLandscape  = false;
@@ -92,7 +93,7 @@ public class StepsFragment extends Fragment {
         if (!mStep.getThumbnailURL().isEmpty()) {
             Picasso.with(getContext())
                     .load(mStep.getThumbnailURL())
-                    .placeholder(R.drawable.ic_cake_red_24dp)
+                    .placeholder(R.drawable.ic_cake)
                     .into(mIvThumbnail);
             mIvThumbnail.setVisibility(View.VISIBLE);
         }
@@ -107,28 +108,39 @@ public class StepsFragment extends Fragment {
         mTabletDevice = false;
         mIsLandscape = getResources().getBoolean(R.bool.is_landscape);
 
-        if (!TextUtils.isEmpty(mStep.getVideoURL())) {
+        if (NetworkHelper.isInternetAvailable(getActivity())) {
+            if (!TextUtils.isEmpty(mStep.getVideoURL())) {
 
-            initializePlayer(Uri.parse(mStep.getVideoURL()));
+                initializePlayer(Uri.parse(mStep.getVideoURL()));
 
-            if (!mTabletDevice && mIsLandscape) {
-                openFullscreenDialog();
-            } else if (mExoPlayerFullscreen) {
-                closeFullscreenDialog();
+                if (!mTabletDevice && mIsLandscape) {
+                    openFullscreenDialog();
+                } else if (mExoPlayerFullscreen) {
+                    closeFullscreenDialog();
+                }
+            } else {
+                // Un- hide InstructionsContainer because in case of phone landscape is hidden
+                mInstructionsContainer.setVisibility(View.VISIBLE);
             }
         } else {
-            // Un- hide InstructionsContainer because in case of phone landscape is hidden
-            mInstructionsContainer.setVisibility(View.VISIBLE);
+            Toast.makeText(getContext(),"No internet", Toast.LENGTH_LONG).show();
         }
     }
 
     private void openFullscreenDialog() {
+        mExoPlayerView.bringToFront();
         mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
-        mExoPlayer.setVideoScalingMode(C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
+
+        mExoPlayerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     private void closeFullscreenDialog() {
-
+        mExoPlayerView.setSystemUiVisibility(SYSTEM_UI_FLAG_VISIBLE);
     }
 
     @Override
