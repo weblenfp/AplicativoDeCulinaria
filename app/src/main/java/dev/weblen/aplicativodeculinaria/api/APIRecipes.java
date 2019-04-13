@@ -17,18 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class APIRecipes implements Serializable {
 
-    private static volatile APIRecipes instance = new APIRecipes();
-    private APIInterface               recipesApiService;
-
-    public static APIRecipes getInstance() {
-        if (instance == null) {
-            synchronized (APIRecipes.class) {
-                if (instance == null) instance = new APIRecipes();
-            }
-        }
-
-        return instance;
-    }
+    private static volatile APIRecipes   instance = new APIRecipes();
+    private                 APIInterface recipesApiService;
 
     private APIRecipes() {
 
@@ -49,6 +39,16 @@ public final class APIRecipes implements Serializable {
         recipesApiService = retrofit.create(APIInterface.class);
     }
 
+    public static APIRecipes getInstance() {
+        if (instance == null) {
+            synchronized (APIRecipes.class) {
+                if (instance == null) instance = new APIRecipes();
+            }
+        }
+
+        return instance;
+    }
+
     public void getRecipes(final APICallback<List<Recipe>> recipesApiCallback) {
         recipesApiService.doGetRecipes().enqueue(new Callback<List<Recipe>>() {
             @Override
@@ -59,7 +59,7 @@ public final class APIRecipes implements Serializable {
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
                 if (call.isCanceled()) {
-                    Log.d("APIRecipes","Request was cancelled");
+                    Log.d("APIRecipes", "Request was cancelled");
                     recipesApiCallback.onCancel();
                 } else {
                     Log.d("APIRecipes", t.getMessage());

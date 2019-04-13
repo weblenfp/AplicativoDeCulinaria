@@ -27,7 +27,6 @@ import dev.weblen.aplicativodeculinaria.api.APICallback;
 import dev.weblen.aplicativodeculinaria.api.APIRecipes;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
-import dev.weblen.aplicativodeculinaria.ui.activities.RecipeDetailActivity;
 import dev.weblen.aplicativodeculinaria.utils.NetworkHelper;
 
 public class RecipesListFragment extends Fragment {

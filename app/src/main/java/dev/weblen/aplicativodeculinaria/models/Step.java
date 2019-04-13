@@ -26,15 +26,15 @@ public class Step implements Parcelable {
 
     };
     @SerializedName("id")
-    private Integer id;
+    private             Integer                  id;
     @SerializedName("shortDescription")
-    private String  shortDescription;
+    private             String                   shortDescription;
     @SerializedName("description")
-    private String  description;
+    private             String                   description;
     @SerializedName("videoURL")
-    private String  videoURL;
+    private             String                   videoURL;
     @SerializedName("thumbnailURL")
-    private String  thumbnailURL;
+    private             String                   thumbnailURL;
     private             Map<String, Object>      additionalProperties = new HashMap<String, Object>();
 
     protected Step(Parcel in) {

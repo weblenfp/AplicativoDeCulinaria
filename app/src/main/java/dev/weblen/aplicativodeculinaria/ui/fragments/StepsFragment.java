@@ -36,7 +36,6 @@ import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.models.Step;
 import dev.weblen.aplicativodeculinaria.utils.NetworkHelper;
 
-import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
 import static android.view.View.SYSTEM_UI_FLAG_VISIBLE;
 
 public class StepsFragment extends Fragment {
@@ -45,7 +44,7 @@ public class StepsFragment extends Fragment {
     private static final String PLAY_WHEN_READY_KEY = "play_when_ready_key";
 
     @BindView(R.id.instructions_container)
-    NestedScrollView mInstructionsContainer;
+    NestedScrollView    mInstructionsContainer;
     @BindView(R.id.exo_player_view)
     SimpleExoPlayerView mExoPlayerView;
     @BindView(R.id.step_thumbnail_image)
@@ -123,7 +122,7 @@ public class StepsFragment extends Fragment {
                 mInstructionsContainer.setVisibility(View.VISIBLE);
             }
         } else {
-            Toast.makeText(getContext(),"No internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "No internet", Toast.LENGTH_LONG).show();
         }
     }
 
