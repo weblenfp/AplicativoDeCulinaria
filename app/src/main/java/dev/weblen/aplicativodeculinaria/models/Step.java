@@ -2,12 +2,14 @@ package dev.weblen.aplicativodeculinaria.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class Step implements Parcelable {
 
     public final static Parcelable.Creator<Step> CREATOR              = new Creator<Step>() {
@@ -35,9 +37,9 @@ public class Step implements Parcelable {
     private             String                   videoURL;
     @SerializedName("thumbnailURL")
     private             String                   thumbnailURL;
-    private             Map<String, Object>      additionalProperties = new HashMap<String, Object>();
+    private             Map<String, Object>      additionalProperties = new HashMap<>();
 
-    protected Step(Parcel in) {
+    Step(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.shortDescription = ((String) in.readValue((String.class.getClassLoader())));
         this.description = ((String) in.readValue((String.class.getClassLoader())));
@@ -115,6 +117,7 @@ public class Step implements Parcelable {
         return 0;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Step{" +

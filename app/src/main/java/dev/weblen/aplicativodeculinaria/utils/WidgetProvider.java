@@ -13,8 +13,8 @@ import dev.weblen.aplicativodeculinaria.ui.activities.MainActivity;
 
 public class WidgetProvider extends AppWidgetProvider {
 
-    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                       int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         Recipe recipe = ContentManagerHelper.loadRecipe(context);
 

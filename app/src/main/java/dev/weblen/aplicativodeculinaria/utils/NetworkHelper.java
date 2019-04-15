@@ -15,8 +15,6 @@ public class NetworkHelper {
             netInfo = cm.getActiveNetworkInfo();
         }
 
-        boolean result = (netInfo != null && netInfo.isConnected());
-
-        return result;
+        return (netInfo != null && netInfo.isConnected());
     }
 }

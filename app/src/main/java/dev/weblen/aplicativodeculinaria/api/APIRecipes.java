@@ -1,5 +1,8 @@
 package dev.weblen.aplicativodeculinaria.api;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.util.Log;
 
 import java.io.Serializable;

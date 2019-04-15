@@ -7,10 +7,10 @@ import android.widget.RemoteViewsService;
 import dev.weblen.aplicativodeculinaria.R;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 
-public class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
+class WidgetRVFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private Context mContext;
-    private Recipe  recipe;
+    private final Context mContext;
+    private       Recipe  recipe;
 
     public WidgetRVFactory(Context context) {
         this.mContext = context;

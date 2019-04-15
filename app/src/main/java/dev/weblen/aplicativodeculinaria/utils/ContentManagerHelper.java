@@ -38,7 +38,7 @@ public class ContentManagerHelper {
 
             editor.putString(SHARED_PREFERENCES_SELECTED_KEY, recipeJsonString);
 
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -52,23 +52,18 @@ public class ContentManagerHelper {
 
         // Create Gson object and translate the json string to related java object array.
         Gson   gson    = new Gson();
-        Recipe mRecipe = gson.fromJson(recipeJsonString, Recipe.class);
 
-        return mRecipe;
+        return gson.fromJson(recipeJsonString, Recipe.class);
     }
 
     public static boolean checkSavedRecipe(Context context, int id) {
 
         Recipe recipe = loadRecipe(context);
 
-        if (recipe != null && recipe.getId().equals(id)) {
-            return true;
-        } else {
-            return false;
-        }
+        return recipe != null && recipe.getId().equals(id);
     }
 
-    public static void cleanSavedRecipe(Context context) {
+    private static void cleanSavedRecipe(Context context) {
 
         // Create SharedPreferences object
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_FILE, MODE_PRIVATE);

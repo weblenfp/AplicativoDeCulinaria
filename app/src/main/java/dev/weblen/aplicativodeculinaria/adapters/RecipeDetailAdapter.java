@@ -22,8 +22,8 @@ import dev.weblen.aplicativodeculinaria.utils.WidgetRVService;
 
 public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Recipe                        mRecipe;
-    private Listeners.OnItemClickListener mOnItemClickListener;
+    private final Recipe                        mRecipe;
+    private final Listeners.OnItemClickListener mOnItemClickListener;
 
     public RecipeDetailAdapter(Recipe recipe, Listeners.OnItemClickListener onItemClickListener) {
         this.mRecipe = recipe;
@@ -43,7 +43,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof RecipeIngredientsViewHolder) {
             RecipeIngredientsViewHolder holderIngredients = (RecipeIngredientsViewHolder) viewHolder;
 
@@ -75,14 +75,14 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         } else if (viewHolder instanceof RecipeStepsViewHolder) {
             RecipeStepsViewHolder holderSteps = (RecipeStepsViewHolder) viewHolder;
-            holderSteps.mTvStepOrder.setText(String.valueOf(position - 1) + ".");
-            holderSteps.mTvStepName.setText(mRecipe.getSteps().get(position - 1).getShortDescription());
+            holderSteps.mTvStepOrder.setText(String.valueOf(viewHolder.getAdapterPosition() - 1) + ".");
+            holderSteps.mTvStepName.setText(mRecipe.getSteps().get(viewHolder.getAdapterPosition() - 1).getShortDescription());
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mOnItemClickListener != null)
-                        mOnItemClickListener.onItemClick(position - 1);
+                        mOnItemClickListener.onItemClick(viewHolder.getAdapterPosition() - 1);
                 }
             });
         }

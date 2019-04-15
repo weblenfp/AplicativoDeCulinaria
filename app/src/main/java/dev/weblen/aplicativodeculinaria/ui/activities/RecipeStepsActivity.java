@@ -1,5 +1,6 @@
 package dev.weblen.aplicativodeculinaria.ui.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -18,6 +19,7 @@ public class RecipeStepsActivity extends AppCompatActivity {
 
     public static final String RECIPE_KEY = "step_selected_recipe";
     public static final String STEP_KEY   = "recipe_general_description";
+
     @BindView(R.id.recipe_step_tab_layout)
     TabLayout mTlRecipeStep;
     @BindView(R.id.recipe_step_viewpager)

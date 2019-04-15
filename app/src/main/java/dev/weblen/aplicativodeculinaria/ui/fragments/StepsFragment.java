@@ -1,7 +1,9 @@
 package dev.weblen.aplicativodeculinaria.ui.fragments;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
@@ -29,6 +31,8 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -51,17 +55,13 @@ public class StepsFragment extends Fragment {
     ImageView           mIvThumbnail;
     @BindView(R.id.instruction_text)
     TextView            mTvInstructions;
-
+    private boolean         mExoPlayerFullscreen = false;
     private SimpleExoPlayer mExoPlayer;
     private Step            mStep;
     private Unbinder        unbinder;
+    private long            mCurrentPosition     = 0;
+    private boolean         mPlayWhenReady       = true;
 
-    private long    mCurrentPosition     = 0;
-    private boolean mPlayWhenReady       = true;
-    private boolean mExoPlayerFullscreen = false;
-
-    private boolean mTabletDevice = false;
-    private boolean mIsLandscape  = false;
 
     public StepsFragment() {
     }
@@ -76,7 +76,7 @@ public class StepsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recipe_step_detail, container, false);
 
@@ -104,21 +104,33 @@ public class StepsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        mTabletDevice = false;
-        mIsLandscape = getResources().getBoolean(R.bool.is_landscape);
+        boolean mIsTabletDevice = getResources().getBoolean(R.bool.isTabletDevice);
+        boolean isLandscapeOrientation;
 
-        if (NetworkHelper.isInternetAvailable(getActivity())) {
+        int currentOrientation = getResources().getConfiguration().orientation;
+
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            isLandscapeOrientation = true;
+        } else {
+            isLandscapeOrientation = false;
+        }
+
+        if (NetworkHelper.isInternetAvailable(Objects.requireNonNull(getActivity()))) {
             if (!TextUtils.isEmpty(mStep.getVideoURL())) {
 
                 initializePlayer(Uri.parse(mStep.getVideoURL()));
 
-                if (!mTabletDevice && mIsLandscape) {
+                if (!mIsTabletDevice && isLandscapeOrientation) {
+                    mInstructionsContainer.setVisibility(View.INVISIBLE);
+                    mIvThumbnail.setVisibility(View.INVISIBLE);
+                    mTvInstructions.setVisibility(View.INVISIBLE);
                     openFullscreenDialog();
                 } else if (mExoPlayerFullscreen) {
                     closeFullscreenDialog();
+                    mInstructionsContainer.setVisibility(View.VISIBLE);
                 }
             } else {
-                // Un- hide InstructionsContainer because in case of phone landscape is hidden
+                // Show InstructionsContainer because in case of phone landscape is hidden
                 mInstructionsContainer.setVisibility(View.VISIBLE);
             }
         } else {
@@ -136,6 +148,7 @@ public class StepsFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        mExoPlayerFullscreen = true;
     }
 
     private void closeFullscreenDialog() {
@@ -158,7 +171,7 @@ public class StepsFragment extends Fragment {
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putLong(POSITION_KEY, mCurrentPosition);
@@ -179,7 +192,7 @@ public class StepsFragment extends Fragment {
             mExoPlayerView.setPlayer(mExoPlayer);
             // Measures bandwidth during playback. Can be null if not required.
             // Produces DataSource instances through which media data is loaded.
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), getString(R.string.app_name)), bandwidthMeter);
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(Objects.requireNonNull(getContext()), Util.getUserAgent(getContext(), getString(R.string.app_name)), bandwidthMeter);
             // This is the MediaSource representing the media to be played.
             MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(mediaUri);
             // Prepare the player with the source.

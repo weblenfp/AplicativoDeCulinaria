@@ -14,8 +14,8 @@ import dev.weblen.aplicativodeculinaria.models.Step;
 import dev.weblen.aplicativodeculinaria.ui.fragments.StepsFragment;
 
 public class PageControlAdapter extends FragmentPagerAdapter {
-    private Context    mContext;
-    private List<Step> mSteps;
+    private final Context    mContext;
+    private final List<Step> mSteps;
 
     public PageControlAdapter(Context context, List<Step> steps, FragmentManager fm) {
         super(fm);

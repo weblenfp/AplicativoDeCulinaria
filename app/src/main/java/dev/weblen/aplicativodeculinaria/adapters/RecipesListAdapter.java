@@ -17,9 +17,9 @@ import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
 
 public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHolder> {
-    private Context                       mContext;
-    private List<Recipe>                  mRecipes;
-    private Listeners.OnItemClickListener mOnItemClickListener;
+    private final Context                       mContext;
+    private final List<Recipe>                  mRecipes;
+    private final Listeners.OnItemClickListener mOnItemClickListener;
 
     public RecipesListAdapter(Context applicationContext, List<Recipe> mRecipes, Listeners.OnItemClickListener onItemClickListener) {
         this.mContext = applicationContext;
@@ -37,7 +37,7 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipesListViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final RecipesListViewHolder viewHolder, final int position) {
         viewHolder.mTvRecipeName.setText(mRecipes.get(position).getName());
         viewHolder.mTvServings.setText(mContext.getString(R.string.servings, mRecipes.get(position).getServings()));
 
@@ -47,12 +47,12 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHold
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListener != null)
-                    mOnItemClickListener.onItemClick(position);
+                    mOnItemClickListener.onItemClick(viewHolder.getAdapterPosition());
             }
         });
     }
 
-    void setImage(RecipesListViewHolder viewHolder, final int position) {
+    private void setImage(RecipesListViewHolder viewHolder, final int position) {
 
         String recipeImage = mRecipes.get(position).getImage();
 

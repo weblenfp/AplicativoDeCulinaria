@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class Ingredient implements Parcelable {
 
     public final static Parcelable.Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
@@ -32,9 +33,9 @@ public class Ingredient implements Parcelable {
     @SerializedName("ingredient")
     private             String                         ingredient;
 
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    protected Ingredient(Parcel in) {
+    Ingredient(Parcel in) {
         this.quantity = ((float) in.readValue((float.class.getClassLoader())));
         this.measure = ((String) in.readValue((String.class.getClassLoader())));
         this.ingredient = ((String) in.readValue((String.class.getClassLoader())));
