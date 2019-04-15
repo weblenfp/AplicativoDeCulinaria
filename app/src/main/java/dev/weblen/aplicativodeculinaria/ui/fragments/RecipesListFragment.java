@@ -40,7 +40,6 @@ public class RecipesListFragment extends Fragment {
     private Unbinder         unbinder;
     private AppConfiguration appConfiguration;
 
-
     private List<Recipe>                  mRecipes;
     private OnFragmentInteractionListener mListener;
 
