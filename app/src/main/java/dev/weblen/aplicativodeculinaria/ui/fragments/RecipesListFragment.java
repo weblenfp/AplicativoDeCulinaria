@@ -29,7 +29,6 @@ import dev.weblen.aplicativodeculinaria.api.APICallback;
 import dev.weblen.aplicativodeculinaria.api.APIRecipes;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
-import dev.weblen.aplicativodeculinaria.ui.activities.RecipeDetailActivity;
 import dev.weblen.aplicativodeculinaria.utils.AppConfiguration;
 import dev.weblen.aplicativodeculinaria.utils.NetworkHelper;
 
@@ -110,9 +109,10 @@ public class RecipesListFragment extends Fragment {
 
     private void formatLayout() {
         boolean loaded = mRecipes != null && mRecipes.size() > 0;
-        appConfiguration.setIdleState(true);
 
         mRecipesRecyclerView.setVisibility(loaded ? View.VISIBLE : View.GONE);
+
+        appConfiguration.setIdleState(true);
     }
 
     @Override
@@ -122,10 +122,10 @@ public class RecipesListFragment extends Fragment {
         View viewRoot = inflater.inflate(R.layout.fragment_list_recipes, container, false);
         unbinder = ButterKnife.bind(this, viewRoot);
 
+        setLayoutDeviceType();
+
         appConfiguration = new AppConfiguration();
         appConfiguration.setIdleState(false);
-
-        setLayoutMode();
 
         if (savedInstanceState != null && savedInstanceState.containsKey(RECIPES_KEY)) {
             mRecipes = savedInstanceState.getParcelableArrayList(RECIPES_KEY);
@@ -141,7 +141,7 @@ public class RecipesListFragment extends Fragment {
 
     }
 
-    private void setLayoutMode() {
+    private void setLayoutDeviceType() {
 
         mRecipesRecyclerView.setHasFixedSize(true);
         mRecipesRecyclerView.setVisibility(View.GONE);
