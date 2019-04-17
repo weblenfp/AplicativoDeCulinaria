@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,15 +30,15 @@ import dev.weblen.aplicativodeculinaria.api.APICallback;
 import dev.weblen.aplicativodeculinaria.api.APIRecipes;
 import dev.weblen.aplicativodeculinaria.models.Recipe;
 import dev.weblen.aplicativodeculinaria.ui.Listeners;
-import dev.weblen.aplicativodeculinaria.utils.AppConfiguration;
+import dev.weblen.aplicativodeculinaria.utils.GlobalApplication;
 import dev.weblen.aplicativodeculinaria.utils.NetworkHelper;
 
 public class RecipesListFragment extends Fragment {
     private static final String RECIPES_KEY = "all_recipes";
     @BindView(R.id.recipes_recycler_view)
     RecyclerView mRecipesRecyclerView;
-    private Unbinder         unbinder;
-    private AppConfiguration appConfiguration;
+    private Unbinder             unbinder;
+    private GlobalApplication    globalApplication;
 
     private List<Recipe>                  mRecipes;
     private OnFragmentInteractionListener mListener;
@@ -112,7 +113,7 @@ public class RecipesListFragment extends Fragment {
 
         mRecipesRecyclerView.setVisibility(loaded ? View.VISIBLE : View.GONE);
 
-        appConfiguration.setIdleState(true);
+        globalApplication.setIdleState(true);
     }
 
     @Override
@@ -124,8 +125,8 @@ public class RecipesListFragment extends Fragment {
 
         setLayoutDeviceType();
 
-        appConfiguration = new AppConfiguration();
-        appConfiguration.setIdleState(false);
+        globalApplication = new GlobalApplication();
+        globalApplication.setIdleState(false);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(RECIPES_KEY)) {
             mRecipes = savedInstanceState.getParcelableArrayList(RECIPES_KEY);
@@ -136,6 +137,7 @@ public class RecipesListFragment extends Fragment {
                     mListener.onFragmentInteraction(mRecipes.get(position));
                 }
             }));
+            formatLayout();
         }
         return viewRoot;
 
@@ -145,8 +147,6 @@ public class RecipesListFragment extends Fragment {
 
         mRecipesRecyclerView.setHasFixedSize(true);
         mRecipesRecyclerView.setVisibility(View.GONE);
-
-        appConfiguration = (AppConfiguration) getActivity().getApplicationContext();
 
         boolean mTabletDevice = getResources().getBoolean(R.bool.isTabletDevice);
         if (mTabletDevice) {

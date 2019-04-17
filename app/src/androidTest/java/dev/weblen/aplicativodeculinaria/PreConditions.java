@@ -8,6 +8,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class PreConditions {
 
+    public static final String SP_NAME = "sp_files";
+
     public static void getMeToRecipeInfo(int recipePosition) {
         onView(withId(R.id.recipes_recycler_view))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(recipePosition, click()));

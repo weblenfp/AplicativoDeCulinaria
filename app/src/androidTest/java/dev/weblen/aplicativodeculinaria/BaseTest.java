@@ -8,21 +8,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 
+import androidx.test.core.app.ActivityScenario;
 import dev.weblen.aplicativodeculinaria.ui.activities.MainActivity;
-import dev.weblen.aplicativodeculinaria.utils.AppConfiguration;
+import dev.weblen.aplicativodeculinaria.utils.GlobalApplication;
 
 public class BaseTest {
 
-    protected AppConfiguration               appConfiguration;
-    protected IdlingResource mIdlingResource;
+    protected GlobalApplication globalApplication;
+    protected IdlingResource    mIdlingResource;
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void registerIdlingResource() {
-        appConfiguration = (AppConfiguration) activityTestRule.getActivity().getApplicationContext();
-        mIdlingResource = appConfiguration.getIdlingResource();
+        globalApplication = (GlobalApplication) activityTestRule.getActivity().getApplicationContext();
+        mIdlingResource = globalApplication.getIdlingResource();
         // Register Idling Resources
         IdlingRegistry.getInstance().register(mIdlingResource);
     }

@@ -6,12 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 
-public class AppConfiguration extends Application {
+public class GlobalApplication extends Application {
 
     @Nullable
     private RecipesIdlingResource mIdlingResource;
 
-    public AppConfiguration() {
+    public GlobalApplication() {
 
         if (dev.weblen.aplicativodeculinaria.BuildConfig.DEBUG) {
             initializeIdlingResource();
