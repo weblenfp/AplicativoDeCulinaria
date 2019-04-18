@@ -32,7 +32,7 @@ public class InstrumentedTest extends BaseTest {
     public void clickRecyclerViewItemHasIntentWithAKey() {
         Intents.init();
 
-        getMeToRecipeInfo(1);
+        getMeToRecipeInfo(0);
         intended(hasExtraWithKey(RecipeDetailActivity.RECIPE_KEY));
 
         Intents.release();
@@ -46,7 +46,7 @@ public class InstrumentedTest extends BaseTest {
         onView(withId(R.id.ingredients_text))
                 .check(matches(isDisplayed()));
 
-        onView(withId(R.id.recipe_step_list))
+        onView(withId(R.id.recipe_step_list_recycler_view))
                 .check(matches(isDisplayed()));
     }
 
@@ -54,17 +54,25 @@ public class InstrumentedTest extends BaseTest {
     public void clickOnRecyclerViewStepItem_opensRecipeStepActivity_orFragment() {
 
         Intents.init();
+<<<<<<< Updated upstream
         getMeToRecipeInfo(1);
+=======
+        getMeToRecipeInfo(0);
+>>>>>>> Stashed changes
 
         boolean twoPaneMode = globalApplication.getResources().getBoolean(R.bool.isTabletDevice);
         if (!twoPaneMode) {
             // Checks if the keys are present and the intent launched is RecipeStepDetailActivity
             selectRecipeStep(1);
+<<<<<<< Updated upstream
             intended(hasComponent(RecipeStepsActivity.class.getName()));
             intended(hasExtraWithKey(RecipeStepsActivity.RECIPE_KEY));
             intended(hasExtraWithKey(RecipeStepsActivity.STEP_KEY));
+=======
+
+>>>>>>> Stashed changes
             // Check TabLayout
-            onView(withId(R.id.recipe_step_tab_layout))
+            onView(withId(R.id.recipe_step_viewpager))
                     .check(matches(isCompletelyDisplayed()));
         } else {
             selectRecipeStep(1);

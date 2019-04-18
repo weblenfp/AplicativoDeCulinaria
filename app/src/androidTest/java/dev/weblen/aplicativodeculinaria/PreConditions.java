@@ -16,7 +16,7 @@ public class PreConditions {
     }
 
     public static void selectRecipeStep(int recipeStep) {
-        onView(withId(R.id.recipe_step_list))
+        onView(withId(R.id.recipe_step_list_recycler_view))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(recipeStep, click()));
     }
 }

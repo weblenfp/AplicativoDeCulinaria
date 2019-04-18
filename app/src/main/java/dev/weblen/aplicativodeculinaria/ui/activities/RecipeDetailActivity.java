@@ -20,7 +20,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     public static final String RECIPE_KEY = "recipe_general_description";
 
-    @BindView(R.id.recipe_step_list)
+    @BindView(R.id.recipe_step_list_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(android.R.id.content)
     View         mParentLayout;
@@ -80,6 +80,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 showStep(position);
             }
         }));
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showStep(int position) {

@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 
-import androidx.test.core.app.ActivityScenario;
 import dev.weblen.aplicativodeculinaria.ui.activities.MainActivity;
 import dev.weblen.aplicativodeculinaria.utils.GlobalApplication;
 
