@@ -52,12 +52,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         mTabletDevice = getResources().getBoolean(R.bool.isTabletDevice);
         if (mTabletDevice) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
 
-            // If there is no fragment state and the recipe contains steps, show the 1st one
             if (savedInstanceState == null && !mRecipe.getSteps().isEmpty()) {
                 showStep(0);
             }

@@ -53,18 +53,16 @@ public class InstrumentedTest extends BaseTest {
     @Test
     public void clickOnRecyclerViewStepItem_opensRecipeStepActivity_orFragment() {
 
-        getMeToRecipeInfo(0);
+        Intents.init();
+        getMeToRecipeInfo(1);
 
         boolean twoPaneMode = globalApplication.getResources().getBoolean(R.bool.isTabletDevice);
         if (!twoPaneMode) {
             // Checks if the keys are present and the intent launched is RecipeStepDetailActivity
-            Intents.init();
             selectRecipeStep(1);
             intended(hasComponent(RecipeStepsActivity.class.getName()));
             intended(hasExtraWithKey(RecipeStepsActivity.RECIPE_KEY));
             intended(hasExtraWithKey(RecipeStepsActivity.STEP_KEY));
-            Intents.release();
-
             // Check TabLayout
             onView(withId(R.id.recipe_step_tab_layout))
                     .check(matches(isCompletelyDisplayed()));
@@ -74,6 +72,7 @@ public class InstrumentedTest extends BaseTest {
             onView(withId(R.id.exo_player_view))
                     .check(matches(isDisplayed()));
         }
+        Intents.release();
     }
 
     @Test

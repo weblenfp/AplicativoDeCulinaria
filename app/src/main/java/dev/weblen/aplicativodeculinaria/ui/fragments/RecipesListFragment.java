@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -146,7 +145,7 @@ public class RecipesListFragment extends Fragment {
     private void setLayoutDeviceType() {
 
         mRecipesRecyclerView.setHasFixedSize(true);
-        mRecipesRecyclerView.setVisibility(View.GONE);
+//        mRecipesRecyclerView.setVisibility(View.GONE);
 
         boolean mTabletDevice = getResources().getBoolean(R.bool.isTabletDevice);
         if (mTabletDevice) {
