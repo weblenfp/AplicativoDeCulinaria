@@ -51,7 +51,7 @@ public class ContentManagerHelper {
         String recipeJsonString = sharedPreferences.getString(SHARED_PREFERENCES_SELECTED_KEY, "");
 
         // Create Gson object and translate the json string to related java object array.
-        Gson   gson    = new Gson();
+        Gson gson = new Gson();
 
         return gson.fromJson(recipeJsonString, Recipe.class);
     }

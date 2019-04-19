@@ -43,7 +43,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
 
-        // Show the Up button in the action bar and set recipes name as title.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mRecipe.getName());

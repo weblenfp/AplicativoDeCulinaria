@@ -1,8 +1,6 @@
 package dev.weblen.aplicativodeculinaria.api;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -54,6 +52,7 @@ public final class APIRecipes implements Serializable {
 
     public void getRecipes(final APICallback<List<Recipe>> recipesApiCallback) {
         recipesApiService.doGetRecipes().enqueue(new Callback<List<Recipe>>() {
+            @NonNull
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipesApiCallback.onResponse(response.body());

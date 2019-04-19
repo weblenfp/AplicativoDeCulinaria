@@ -61,7 +61,6 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListViewHold
                     .load(recipeImage)
                     .placeholder(R.drawable.ic_cake)
                     .into(viewHolder.mIvRecipe);
-            //.error(R.drawable.ic_image_error)
         }
     }
 

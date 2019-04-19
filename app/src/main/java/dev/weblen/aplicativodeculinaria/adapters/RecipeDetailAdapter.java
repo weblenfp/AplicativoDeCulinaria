@@ -75,7 +75,8 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         } else if (viewHolder instanceof RecipeStepsViewHolder) {
             RecipeStepsViewHolder holderSteps = (RecipeStepsViewHolder) viewHolder;
-            holderSteps.mTvStepOrder.setText(String.valueOf(viewHolder.getAdapterPosition() - 1) + ".");
+            String textDecoration = (viewHolder.getAdapterPosition() - 1) + ".";
+            holderSteps.mTvStepOrder.setText(textDecoration);
             holderSteps.mTvStepName.setText(mRecipe.getSteps().get(viewHolder.getAdapterPosition() - 1).getShortDescription());
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
