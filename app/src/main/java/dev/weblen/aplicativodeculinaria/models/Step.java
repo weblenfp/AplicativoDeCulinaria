@@ -15,9 +15,6 @@ public class Step implements Parcelable {
     public final static Parcelable.Creator<Step> CREATOR              = new Creator<Step>() {
 
 
-        @SuppressWarnings({
-                "unchecked"
-        })
         public Step createFromParcel(Parcel in) {
             return new Step(in);
         }

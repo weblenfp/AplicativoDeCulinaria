@@ -23,10 +23,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertNotNull;
 
+@SuppressWarnings("WeakerAccess")
 @RunWith(AndroidJUnit4.class)
 public class InstrumentedTest extends BaseTest {
 
-    public static final String SP_NAME = "sp_files";
+    private static final String SP_NAME = "sp_files";
 
     @Test
     public void performClickOnRecipe() {

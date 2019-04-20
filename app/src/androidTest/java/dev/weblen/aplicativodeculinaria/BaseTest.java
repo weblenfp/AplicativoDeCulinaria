@@ -11,13 +11,13 @@ import org.junit.Rule;
 import dev.weblen.aplicativodeculinaria.ui.activities.MainActivity;
 import dev.weblen.aplicativodeculinaria.utils.GlobalApplication;
 
-public class BaseTest {
+class BaseTest {
 
-    protected GlobalApplication globalApplication;
-    protected IdlingResource    mIdlingResource;
+    GlobalApplication globalApplication;
+    private IdlingResource mIdlingResource;
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void registerIdlingResource() {

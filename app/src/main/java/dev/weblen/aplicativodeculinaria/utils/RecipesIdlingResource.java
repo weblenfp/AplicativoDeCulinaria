@@ -10,7 +10,7 @@ public class RecipesIdlingResource implements IdlingResource {
     @Nullable
     private ResourceCallback callback;
 
-    private AtomicBoolean isIdleNow = new AtomicBoolean(true);
+    private final AtomicBoolean isIdleNow = new AtomicBoolean(true);
 
     @Override
     public String getName() {

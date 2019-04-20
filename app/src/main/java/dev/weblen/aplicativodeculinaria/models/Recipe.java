@@ -16,9 +16,6 @@ public class Recipe implements Parcelable {
     public final static Parcelable.Creator<Recipe> CREATOR              = new Creator<Recipe>() {
 
 
-        @SuppressWarnings({
-                "unchecked"
-        })
         public Recipe createFromParcel(Parcel in) {
             return new Recipe(in);
         }

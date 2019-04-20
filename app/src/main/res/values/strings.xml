@@ -8,8 +8,4 @@
     <string name="pageTitle">Step %d</string>
     <string name="no_data">No recipe selected…</string>
     <string name="show_in_widget">widget</string>
-    <string name="android_portrait_screen">android portrait screen</string>
-    <string name="android_landscape_screen">android landscape screen</string>
-    <string name="android_reverse_portrait_screen">android reverse portrait screen</string>
-    <string name="android_reverse_landscape_screen">android reverse landscape screen</string>
 </resources>

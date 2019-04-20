@@ -22,8 +22,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.recipe_step_list_recycler_view)
     RecyclerView mRecyclerView;
+
     @BindView(android.R.id.content)
-    View         mParentLayout;
+    View mParentLayout;
 
     private boolean mTabletDevice;
 

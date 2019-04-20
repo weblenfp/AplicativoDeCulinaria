@@ -72,6 +72,6 @@ public class ContentManagerHelper {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 }

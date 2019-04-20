@@ -1,10 +1,8 @@
 package dev.weblen.aplicativodeculinaria.utils;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
 
 public class GlobalApplication extends Application {
 
@@ -19,12 +17,10 @@ public class GlobalApplication extends Application {
     }
 
     @VisibleForTesting
-    @NonNull
-    private IdlingResource initializeIdlingResource() {
+    private void initializeIdlingResource() {
         if (mIdlingResource == null) {
             mIdlingResource = new RecipesIdlingResource();
         }
-        return mIdlingResource;
     }
 
     public void setIdleState(boolean state) {
