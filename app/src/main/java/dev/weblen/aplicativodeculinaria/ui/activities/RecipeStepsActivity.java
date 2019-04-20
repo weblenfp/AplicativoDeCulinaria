@@ -1,12 +1,15 @@
 package dev.weblen.aplicativodeculinaria.ui.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,12 +21,19 @@ public class RecipeStepsActivity extends AppCompatActivity {
 
     public static final String RECIPE_KEY = "step_selected_recipe";
     public static final String STEP_KEY   = "recipe_general_description";
+
     @BindView(R.id.recipe_step_tab_layout)
     TabLayout mTlRecipeStep;
+
     @BindView(R.id.recipe_step_viewpager)
     ViewPager mVpRecipeStep;
+
     @BindView(android.R.id.content)
-    View      mParentLayout;
+    View mParentLayout;
+
+    @BindView(R.id.app_bar)
+    AppBarLayout mAppBar;
+
     private Recipe mRecipe;
     private int    mStepSelectedPosition;
 
@@ -34,20 +44,17 @@ public class RecipeStepsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-//        Toolbar toolbar = findViewById(R.id.detail_toolbar);
-//        setSupportActionBar(toolbar);
-
         Bundle bundle = getIntent().getExtras();
+
         if (bundle != null && bundle.containsKey(RECIPE_KEY) && bundle.containsKey(STEP_KEY)) {
             mRecipe = bundle.getParcelable(RECIPE_KEY);
             mStepSelectedPosition = bundle.getInt(STEP_KEY);
         } else {
-//            Misc.makeSnackBar(this, mParentLayout, getString(R.string.failed_to_load_recipe), true);
             finish();
         }
 
-        // Show the Up button in the action bar.
         final ActionBar actionBar = getSupportActionBar();
+
         if (actionBar != null) {
             actionBar.setTitle(mRecipe.getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -75,6 +82,26 @@ public class RecipeStepsActivity extends AppCompatActivity {
             }
         });
         mVpRecipeStep.setCurrentItem(mStepSelectedPosition);
+
+        super.onPostResume();
+
+        int currentOrientation = getResources().getConfiguration().orientation;
+
+        boolean isLandscapeOrientation;
+        isLandscapeOrientation = currentOrientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (isLandscapeOrientation) {
+            mAppBar.setVisibility(View.GONE);
+            mTlRecipeStep.setVisibility(View.GONE);
+            getSupportActionBar().hide();
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        } else {
+            mAppBar.setVisibility(View.VISIBLE);
+            mTlRecipeStep.setVisibility(View.VISIBLE);
+            getSupportActionBar().show();
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
     }
 
     @Override

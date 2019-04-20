@@ -2,22 +2,20 @@ package dev.weblen.aplicativodeculinaria.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class Recipe implements Parcelable {
 
     public final static Parcelable.Creator<Recipe> CREATOR              = new Creator<Recipe>() {
 
 
-        @SuppressWarnings({
-                "unchecked"
-        })
         public Recipe createFromParcel(Parcel in) {
             return new Recipe(in);
         }
@@ -28,18 +26,18 @@ public class Recipe implements Parcelable {
 
     };
     @SerializedName("id")
-    private Integer          id;
+    private             Integer                    id;
     @SerializedName("name")
-    private String           name;
+    private             String                     name;
     @SerializedName("ingredients")
-    private ArrayList<Ingredient> ingredients = null;
+    private             ArrayList<Ingredient>      ingredients;
     @SerializedName("steps")
-    private ArrayList<Step>       steps       = null;
+    private             ArrayList<Step>            steps;
     @SerializedName("servings")
-    private Integer          servings;
+    private             Integer                    servings;
     @SerializedName("image")
-    private String           image;
-    private             Map<String, Object>        additionalProperties = new HashMap<String, Object>();
+    private             String                     image;
+    private             Map<String, Object>        additionalProperties = new HashMap<>();
 
     protected Recipe(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -66,6 +64,7 @@ public class Recipe implements Parcelable {
         return id;
     }
 
+    @SuppressWarnings("unused")
     public void setId(Integer id) {
         this.id = id;
     }
@@ -74,6 +73,7 @@ public class Recipe implements Parcelable {
         return name;
     }
 
+    @SuppressWarnings("unused")
     public void setName(String name) {
         this.name = name;
     }
@@ -82,6 +82,7 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
+    @SuppressWarnings("unused")
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
@@ -90,6 +91,7 @@ public class Recipe implements Parcelable {
         return steps;
     }
 
+    @SuppressWarnings("unused")
     public void setSteps(ArrayList<Step> steps) {
         this.steps = steps;
     }
@@ -98,6 +100,7 @@ public class Recipe implements Parcelable {
         return servings;
     }
 
+    @SuppressWarnings("unused")
     public void setServings(Integer servings) {
         this.servings = servings;
     }
@@ -106,14 +109,17 @@ public class Recipe implements Parcelable {
         return image;
     }
 
+    @SuppressWarnings("unused")
     public void setImage(String image) {
         this.image = image;
     }
 
+    @SuppressWarnings("unused")
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
+    @SuppressWarnings("unused")
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
@@ -132,6 +138,7 @@ public class Recipe implements Parcelable {
         return 0;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Recipe{" +

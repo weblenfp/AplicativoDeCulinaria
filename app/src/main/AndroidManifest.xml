@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="dev.weblen.aplicativodeculinaria">
+    package="dev.weblen.aplicativodeculinaria"
+    tools:ignore="GoogleAppIndexingWarning">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".utils.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,12 +28,25 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.activities.RecipeDetailActivity"
-            android:parentActivityName=".ui.activities.RecipeDetailActivity"
-            tools:ignore="WrongManifestParent" />
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="dev.weblen.aplicativodeculinaria.ui.activities.RecipeDetailActivity" />
+            android:parentActivityName=".ui.activities.RecipeDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.RecipeDetailActivity" />
+        </activity>
 
+        <receiver android:name=".utils.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_features" />
+        </receiver>
+
+        <service
+            android:name=".utils.WidgetRVService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

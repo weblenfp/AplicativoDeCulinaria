@@ -5,18 +5,10 @@
     android:layout_height="match_parent"
     tools:context="dev.weblen.aplicativodeculinaria.ui.fragments.RecipesListFragment">
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/refresh_recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipes_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/recipe_list_item">
-    </android.support.v7.widget.RecyclerView>
-
-</android.support.v4.widget.SwipeRefreshLayout>
+        tools:listitem="@layout/recipe_list_item" />
 
 </RelativeLayout>
