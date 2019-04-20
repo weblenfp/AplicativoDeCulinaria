@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public class Step implements Parcelable {
 
     public final static Parcelable.Creator<Step> CREATOR              = new Creator<Step>() {
